@@ -1,0 +1,27 @@
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:ital@1&display=swap');
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+
+  .buttons{
+    background: radial-gradient(50% 50% at 50% 50%, #310728 0%, #0B0117 100%);
+
+  }
+
+  .or {
+    display: flex;
+    flex-direction: row;
+  }
+  .or:before, .or:after{
+    content: "";
+    flex: 1 1;
+    border-bottom: 1px solid;
+    margin: auto;
+  }
+  .or:before {
+    margin-right: 10px
+  }
+  .or:after {
+    margin-left: 10px
+  }
+  
