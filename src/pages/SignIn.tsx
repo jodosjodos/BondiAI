@@ -1,8 +1,25 @@
 import { Link } from "react-router-dom";
 import Motto from "../components/Motto";
 import { FcGoogle } from "react-icons/fc";
-
+import * as yup from "yup"
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+const schema = yup.object().shape({
+  email:yup.string().required().email(),
+  password:yup.string().required().min(6)
+})
+interface DataProps{
+  email:string
+  password:string
+}
 const SignIn = () => {
+  const {register,handleSubmit,formState:{errors},reset} =useForm({
+    resolver:yupResolver(schema)
+  })
+  const handleSubmiter=(data:DataProps)=>{
+    console.log(data);
+    
+  }
   return (
     <div>
       <div className=" h-screen p-5">
@@ -15,7 +32,7 @@ const SignIn = () => {
 
           <div className=" bg-[#19151E] flex flex-col items-center justify-center py-16 mx-12 px-24   gap-12 ">
             <h1 className="self-start font-bold text-3xl">Welcome back, </h1>
-            <form className=" flex flex-col gap-8 w-full">
+            <form className=" flex flex-col gap-8 w-full" onSubmit={handleSubmit(handleSubmiter)}>
               <div className=" flex flex-col gap-2">
                 <label htmlFor="email">Email : </label>
                 <input
@@ -23,7 +40,14 @@ const SignIn = () => {
                   id="email"
                   className="rounded-md h-10 w-96 border-none  ac text-[#0B0117]  px-3 outline-[#42236A] outline-1"
                   placeholder=" enter  your email "
+                  {...register("email")}
+
                 />
+                {errors.email && (
+                    <p className="text-red-400 font-bold">
+                      {errors.email.message}
+                    </p>
+                  )}
               </div>
 
               <div className=" flex flex-col gap-2">
@@ -33,7 +57,14 @@ const SignIn = () => {
                   id="password"
                   className="rounded-md h-10 w-96 border-none  ac text-[#0B0117]  px-3 outline-[#42236A] outline-4"
                   placeholder=" enter  password "
+                  {...register("password")}
+
                 />
+                   {errors.password && (
+                    <p className="text-red-400 font-bold">
+                      {errors.password.message}
+                    </p>
+                  )}
               </div>
               <div className=" flex flex-row justify-between">
                 <div className="flex flex-row gap-1">
