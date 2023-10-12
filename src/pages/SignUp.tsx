@@ -3,7 +3,7 @@
   import * as yup from "yup";
   import { useForm } from "react-hook-form";
   import { yupResolver } from "@hookform/resolvers/yup";
-  import { useEffect } from "react";
+  import { useEffect, useState } from "react";
   const schema = yup.object().shape({
     fullName: yup.string().required().min(3),
     email: yup.string().email().required(),
@@ -19,23 +19,27 @@
   }
 
   const SignUp = () => {
+   const [isSubmitSuccessful,setIsSubmitSuccessful]=useState(false)
     const {
       register,
       handleSubmit,
-      formState: { errors, isSubmitSuccessful },
+      formState: { errors },clearErrors,
       reset,
     } = useForm({
       resolver: yupResolver(schema),
     });
 
     const handleSubmitter = (data: DataType) => {
-      console.log(isSubmitSuccessful);
-      
+      if(data.email){
+
+        setIsSubmitSuccessful(true  )
+        clearErrors()
+      }
       console.log(data);
     
     };
     useEffect(() => {
-      if (isSubmitSuccessful) reset();
+      if (isSubmitSuccessful) {reset()};
     }, [reset]);
     return (
       <div>
